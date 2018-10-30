@@ -5,28 +5,53 @@
 // TODO: 	Iterating over multiple JSON files - DONE
 //			Support for multiple tables/different JSON files 
 // 		 		JSON files: objects, exhibitions, departments
-//				Tables:	
 //			Cleaning/prepping data before inserting
 
 import java.io.File;
 import java.io.FileReader;
 import java.sql.*;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JSONtoMySQL {
-	static String id;
-	static String artist;
-	static String country;
-	static PreparedStatement prepStatement;
+
+	// object columns
+	static String object_id; // 1
+	static String title; // 2
+	static String description; // 3
+	static String signature; // 4
+	static String dated; // 5
+	static String markings; // 6
+	static String style; // 7
+	static String classification; // 8
+	static String approval; // 9
+	static String credit_line; // 10
+	static String accession_number; // 11
+	static String artist_id; // 12
+	static String artist_name; // 13
+	static String culture_id; // 14
+	static String room_id; // 15
+	static String department_id; // 16
+	static String exhibition_id; // 17
+	static String spec_id; // 18
+
+	private static String connectionURL = "jdbc:mysql://localhost:3306/artdb";
+	private static String connectionUser = "root";
+	private static String connectionPassword = "root";
+
+	static PreparedStatement objectInsertStatement;
 	static int numFiles = 0;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Parsing JSON files, please wait...");
+
 		long startTime = System.nanoTime();
 		insertJSONtoDB();
 		long endTime = System.nanoTime();
-		long duration = ((endTime - startTime)/1000000);
+
+		long duration = ((endTime - startTime) / 1000000);
+
 		System.out.println("Parsing and insertion completed!");
 		System.out.println("Parsed and inserted " + numFiles + " files in " + duration + " nanoseconds.");
 	}
@@ -36,8 +61,9 @@ public class JSONtoMySQL {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/artdb", "root", "root");
-			prepStatement = con.prepareStatement("insert into object values (?, ?, ?)");
+			con = DriverManager.getConnection(connectionURL, connectionUser, connectionPassword);
+			objectInsertStatement = con.prepareStatement(
+					"insert into object values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			JSONParser parser = new JSONParser();
 
@@ -49,7 +75,7 @@ public class JSONtoMySQL {
 						numFiles++;
 						Object obj = parser.parse(new FileReader(file));
 						JSONObject jsonObject = (JSONObject) obj;
-						jsonParser(jsonObject, prepStatement);
+						parseObject(jsonObject, objectInsertStatement);
 					}
 				}
 			}
@@ -68,35 +94,91 @@ public class JSONtoMySQL {
 	}
 
 	// Parses and executes prepared statement
-	public static void jsonParser(JSONObject jsonObject, PreparedStatement prepStatement) throws SQLException {
-		id = (String) jsonObject.get("id");
-		artist = cleanArtist((String) jsonObject.get("artist"));
-		country = cleanCountry((String) jsonObject.get("country"));
-		
-		System.out.println("id length: " + id.length());
-		System.out.println("Artist length: " + artist.length());
-		System.out.println("Country length: " + country.length());
+	public static void parseObject(JSONObject jsonObject, PreparedStatement prepStatement) throws SQLException {
+		object_id = (String) jsonObject.get("id");
+		title = (String) jsonObject.get("title");
+		description = (String) jsonObject.get("description");
+		signature = (String) jsonObject.get("signed");
+		dated = (String) jsonObject.get("dated");
+		markings = (String) jsonObject.get("markings");
+		style = (String) jsonObject.get("style");
+		classification = (String) jsonObject.get("classification");
+		approval = jsonObject.get("curator_approved") + "";
+		credit_line = (String) jsonObject.get("creditline");
+		accession_number = "0"; // (String) jsonObject.get("accession_number");
+		artist_name = (String) jsonObject.get("artist_name");
+		artist_id = generateArtistID(artist_name);
+		culture_id = generateCultureID((String) jsonObject.get("culture"));
+		room_id = generateRoomID((String) jsonObject.get("room"));
+		department_id = generateDepartmentID((String) jsonObject.get("department"));
+		exhibition_id = "0"; // TODO: figure out what to do here
+		spec_id = generateSpecID(jsonObject.get("image_height") + "", jsonObject.get("image_width") + "");
 
-		prepStatement.setString(1, id);
-		prepStatement.setString(2, artist);
-		prepStatement.setString(3, country);
+		object_id = object_id.substring(31);
+		artist_name = cleanArtist(artist_name);
+		description = truncateLongString(description);
+		markings = truncateLongString(markings);
+		title = truncateLongString(title);
+
+		prepStatement.setString(1, object_id);
+		prepStatement.setString(2, title);
+		prepStatement.setString(3, description);
+		prepStatement.setString(4, signature);
+		prepStatement.setString(5, dated);
+		prepStatement.setString(6, markings);
+		prepStatement.setString(7, style);
+		prepStatement.setString(8, classification);
+		prepStatement.setString(9, approval);
+		prepStatement.setString(10, credit_line);
+		prepStatement.setString(11, accession_number);
+		prepStatement.setString(12, artist_id);
+		prepStatement.setString(13, artist_name);
+		prepStatement.setString(14, culture_id);
+		prepStatement.setString(15, room_id);
+		prepStatement.setString(16, department_id);
+		prepStatement.setString(17, exhibition_id);
+		prepStatement.setString(18, spec_id);
 
 		prepStatement.executeUpdate();
+		System.out.println("Succesfully inserted: " + title);
 	}
-	
-	
+
+	public static String truncateLongString(String input) {
+		if (input.length() > 200) {
+			return input.substring(0, 197) + "...";
+		} else
+			return input;
+	}
+
+	// Returns artist id from artist name
+	// If no generated id, make new one
+	public static String generateArtistID(String artistName) {
+		return "0";
+	}
+
+	public static String generateCultureID(String cultureName) {
+		return "0";
+	}
+
+	public static String generateRoomID(String roomName) {
+		return "0";
+	}
+
+	// Returns department id from department name
+	// Because limited num of departments, use table lookup
+	public static String generateDepartmentID(String department) {
+		return "0";
+	}
+
+	public static String generateSpecID(String image_height, String image_width) {
+		return "0";
+	}
+
 	// Methods that clean/prep data
 	public static String cleanArtist(String artist) {
-		if(artist.equals(null)||artist.equals("")) {
+		if (artist == null || artist.equals("")) {
 			artist = "Unknown artist";
 		}
 		return artist;
-	}
-	
-	public static String cleanCountry(String country) {
-		if(country.equals(null)||country.equals("")) {
-			country = "Unknown artist";
-		}
-		return country;
 	}
 }
