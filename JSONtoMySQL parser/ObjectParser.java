@@ -13,13 +13,18 @@ import org.json.simple.parser.*;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.*;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ObjectParser extends Parser {
     // artist columns
     private static String life_date;
     private static String nationality;
     private static String portfolio_id;
+
+    private static AtomicInteger artistID = new AtomicInteger(0);
+    private static AtomicInteger cultureID = new AtomicInteger(0);
+    private static AtomicInteger roomID = new AtomicInteger(0);
+    private static AtomicInteger specID = new AtomicInteger(0);
 
     static void parseObjectFile(String object_id) {
         try {
@@ -109,8 +114,7 @@ public class ObjectParser extends Parser {
         ResultSet info = artistInfo.executeQuery();
 
         if (!info.next()) {
-            Random rnd = new Random();
-            String artist_id = rnd.nextInt(999999) + "";
+            String artist_id = artistID.getAndIncrement() + "";
             artistInsertStatement.setString(1, artist_id);
             artistInsertStatement.setString(2, artistName);
             artistInsertStatement.setString(3, life_date);
@@ -135,8 +139,7 @@ public class ObjectParser extends Parser {
         ResultSet info = cultureInfo.executeQuery();
 
         if (!info.next()) {
-            Random rnd = new Random();
-            String culture_id = rnd.nextInt(999999) + "";
+            String culture_id = cultureID.incrementAndGet() + "";
             cultureInsert.setString(1, culture_id);
             cultureInsert.setString(2, continent);
             cultureInsert.setString(3, country);
@@ -158,8 +161,7 @@ public class ObjectParser extends Parser {
         ResultSet info = roomInfo.executeQuery();
 
         if (!info.next()) {
-            Random rnd = new Random();
-            String room_id = rnd.nextInt(999999) + "";
+            String room_id = roomID.incrementAndGet() + "";
             roomInsert.setString(1, room_id);
             roomInsert.setString(2, roomName);
 
@@ -181,8 +183,7 @@ public class ObjectParser extends Parser {
         ResultSet info = specInfo.executeQuery();
 
         if (!info.next()) {
-            Random rnd = new Random();
-            String spec_id = rnd.nextInt(999999) + "";
+            String spec_id = specID.incrementAndGet() + "";
             specInsert.setString(1, spec_id);
             specInsert.setString(2, dimensions);
 
