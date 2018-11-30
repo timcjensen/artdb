@@ -10,7 +10,8 @@ import java.util.ListIterator;
 
 public class test {
 	public static void main(String[] args) {
-		String queryString = "The White Bridge";
+		String queryString = "The White Bridge"; // String to search on
+		
 		System.out.println("Initializing session:");
 		Session session = HibernateGetter.init();	
 		System.out.println("Session init");
