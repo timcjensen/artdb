@@ -1,25 +1,48 @@
 package db;
 
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+
+import java.util.List;
+import java.util.ListIterator;
 
 public class test {
-	
-	static Session session;
 	public static void main(String[] args) {
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-		session = sessionFactory.getCurrentSession();
+		String queryString = "The White Bridge";
+		System.out.println("Initializing session:");
+		Session session = HibernateGetter.init();	
+		System.out.println("Session init");
 		
-		Transaction tx = session.beginTransaction();
+		FullTextSession fullTextSession = Search.getFullTextSession(session);
+		System.out.println("FullTextSession fullTextSession = Search.getFullTextSession(session)");
+		
+		try {
+			fullTextSession.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		Artist artist = HibernateGetter.getArtist(1);
-		Art_Object art = HibernateGetter.getArt_Object(44);
-		System.out.println(artist.getArtist_name());
-		System.out.println(art.getTitle());
+		QueryBuilder builder = fullTextSession.getSearchFactory()
+				.buildQueryBuilder()
+				.forEntity(Art_Object.class)
+				.get();
 		
-		tx.commit();
-		sessionFactory.close();
+		org.apache.lucene.search.Query query =
+				builder.keyword().onField("Title").matching(queryString).createQuery();
+		
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, Art_Object.class);
+		List<Art_Object> result = fullTextQuery.list();
+		System.out.println("List<Art_Object> result = fullTextQuery.list();");
+		
+		System.out.println(result.size());
+		
+		ListIterator<Art_Object> itr = result.listIterator();
+		while(itr.hasNext()) {
+			System.out.println(itr.next().getTitle());
+		}
+		session.close();
 	}
 }

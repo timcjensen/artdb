@@ -13,11 +13,22 @@
 	<h1 align="center">Search</h1>
 
 	<form action="index.jsp" method="get">
-		Item Number: <input type="text" name="item"><br>
+		Search object by Object ID: <label>
+		<input type="text" name="object">
+	</label>Input<br>
 		 <input type="Submit" value="Submit Order">
 	</form>
 
-
-	<%%>
+	<%	HibernateGetter.init();
+		String object_id = request.getParameter("object");
+        Art_Object artObject;
+		if(object_id != null && !object_id.trim().equals("")){
+		    System.out.println(object_id);
+		    artObject = HibernateGetter.getArt_Object(Integer.parseInt(object_id));
+		    
+		    searchResult search = new searchResult();
+		    search.doGet(request, response);
+        }
+    %>
 </body>
 </html>

@@ -1,10 +1,14 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Artist {
-	private int artist_id;
-	private String Artist_name;
-	private String Life_date;
-	private String Nationality;
+	@Id private int artist_id;
+	@Field private String Artist_name;
+	@Field private String Life_date;
+	@Field private String Nationality;
 	
 	public Artist() {
 		super();

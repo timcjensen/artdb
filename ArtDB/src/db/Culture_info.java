@@ -1,9 +1,13 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Culture_info {
-    public int Culture_id;
-    public String Continent;
-    public String Country;
+    @Id public int Culture_id;
+    @Field public String Continent;
+    @Field public String Country;
 
     public Culture_info(int culture_id, String continent, String country) {
         Culture_id = culture_id;

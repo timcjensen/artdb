@@ -1,8 +1,12 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Room {
-    private int Room_id;
-    private String Room_name;
+    @Id private int Room_id;
+    @Field private String Room_name;
 
     public Room(int room_id, String room_name) {
         Room_id = room_id;

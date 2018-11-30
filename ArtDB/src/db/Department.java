@@ -1,8 +1,12 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Department {
-    public int Department_id;
-    public String Department_name;
+    @Id public int Department_id;
+    @Field public String Department_name;
 
     public Department(int department_id, String department_name) {
         Department_id = department_id;

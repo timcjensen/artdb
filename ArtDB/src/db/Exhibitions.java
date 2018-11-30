@@ -1,12 +1,16 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Exhibitions {
-    private int Exhibition_id;
-    private String Exhibition_title;
-    private String Exhibition_description;
-    private String Begin;
-    private String End;
-    private String Display_date;
+    @Id private int Exhibition_id;
+    @Field private String Exhibition_title;
+    @Field private String Exhibition_description;
+    @Field private String Begin;
+    @Field private String End;
+    @Field private String Display_date;
     private int Department_id;
 
     public Exhibitions(int exhibition_id, String exhibition_title, String exhibition_description, String begin, String end, String display_date, int department_id) {

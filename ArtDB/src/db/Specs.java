@@ -1,8 +1,12 @@
 package db;
 
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+
 public class Specs {
-    private int Spec_id;
-    private String Dimensions;
+    @Id private int Spec_id;
+    @Field private String Dimensions;
 
     public Specs(int spec_id, String dimensions) {
         Spec_id = spec_id;

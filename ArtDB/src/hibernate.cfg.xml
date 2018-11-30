@@ -6,12 +6,13 @@
 <hibernate-configuration>
 
 <session-factory>
+	<property name="show_sql">false</property>
 	
 	<!-- Using JDBC and MySQL, the default port is 3306, name of database is cs485_lab -->
 	<property name="connection.url"> jdbc:mysql://localhost:3306/artdb</property>
 	<!-- should be the username and password to MySQL server -->
 	<property name="connection.username">root</property>
-	<property name="connection.password">sevenB1</property>
+	<property name="connection.password">root</property>
 
 	<!-- Using JDBS to connect to MySQL, JDBC driver needs to to included in the build path of eclipse -->
 	<property name="connection.driver_class"> com.mysql.jdbc.Driver</property>

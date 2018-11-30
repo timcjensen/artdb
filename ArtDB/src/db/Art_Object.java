@@ -1,17 +1,25 @@
 package db;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
+@Entity
+@Indexed
 public class Art_Object {
-	private int object_id;
-	private String Title;
-	private String Description;
-	private String Signature;
-	private String Dated;
-	private String Markings;
-	private String Style;
-	private String Classification;
-	private String Approval;
-	private String Credit_line;
-	private String Accession_number;
+	@Id private int object_id;
+	@Field private String Title;
+	@Field private String Description;
+	@Field private String Signature;
+	@Field private String Dated;
+	@Field private String Markings;
+	@Field private String Style;
+	@Field private String Classification;
+	@Field private String Approval;
+	@Field private String Credit_line;
+	@Field private String Accession_number;
 	private String Artist_id;
 	private String Culture_id;
 	private String Room_id;
