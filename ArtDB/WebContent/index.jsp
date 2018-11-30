@@ -13,18 +13,17 @@
 	<h1 align="center">Search</h1>
 
 	<form action="index.jsp" method="get">
-		Search object by Object ID: <label>
+		Search object by Object name: <label>
 		<input type="text" name="object">
 	</label>Input<br>
-		 <input type="Submit" value="Submit Order">
+		 <input type="Submit" value="Submit Search">
 	</form>
 
 	<%	HibernateGetter.init();
-		String object_id = request.getParameter("object");
+		String object_title = request.getParameter("object");
         Art_Object artObject;
-		if(object_id != null && !object_id.trim().equals("")){
-		    System.out.println(object_id);
-		    artObject = HibernateGetter.getArt_Object(Integer.parseInt(object_id));
+		if(object_title != null && !object_title.trim().equals("")){
+		    System.out.println(object_title);
 		    
 		    searchResult search = new searchResult();
 		    search.doGet(request, response);
