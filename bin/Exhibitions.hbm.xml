@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="db.Exhibitions" table="exhibitions">  <!-- Java class Customer_order to table customer_order -->
+        <id name="Exhibition_id" type="int">
+            <generator class="increment" /> <!-- ID is automatically generated -->
+        </id>
+        <property name="Exhibition_title" column="exhibition_title"
+                  type="string" />
+        <property name="Exhibition_description" column="exhibition_description" type="string" />
+        <property name="Begin" column="begin" type="string" />
+        <property name="End" column="end" type="string" />
+        <property name="Display_date" column="display_date" type="string" />
+        <property name="Department_id" column="department_id" type="int" />
+    </class>
+</hibernate-mapping>

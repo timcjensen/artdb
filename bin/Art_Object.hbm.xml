@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+	<class name="db.Art_Object" table="object">  <!-- Java class Customer_order to table customer_order -->
+		<id name="object_id" type="int">
+			<generator class="increment" /> <!-- ID is automatically generated -->
+		</id>
+		<property name="Title" column="title"
+			type="string" />
+		<property name="Description" column="description" type="string" />
+		<property name="Signature" column="signature" type="string" />
+		<property name="Dated" column="dated" type="string" />
+		<property name="Markings" column="markings" type="string" />
+		<property name="Style" column="style"
+			type="string" />
+		<property name="Classification" column="classification"
+			type="string" />
+		<property name="Approval" column="approval" type="string" />
+		<property name="Credit_line" column="credit_line" type="string" />
+		<property name="Accession_number" column="accession_number" type="string" />
+		<property name="Artist_id" column="artist_id" type="string" />
+		<property name="Culture_id" column="culture_id" type="string" />
+		<property name="Room_id" column="room_id" type="string" />
+		<property name="Exhibition_id" column="exhibition_id" type="string" />
+		<property name="Department_id" column="department_id" type="string" />
+		<property name="Spec_id" column="spec_id" type="string" />
+	</class>
+</hibernate-mapping>

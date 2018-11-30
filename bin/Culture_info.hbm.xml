@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="db.Culture_info" table="culture_info">  <!-- Java class Customer_order to table customer_order -->
+        <id name="culture_id" type="int">
+            <generator class="increment" /> <!-- ID is automatically generated -->
+        </id>
+        <property name="Continent" column="continent"
+                  type="string" />
+        <property name="Country" column="country" type="string" />
+    </class>
+</hibernate-mapping>

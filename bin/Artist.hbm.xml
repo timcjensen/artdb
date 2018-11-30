@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+	<class name="db.Artist" table="artist">  <!-- Java class Customer_order to table customer_order -->
+		<id name="artist_id" type="int">
+			<generator class="increment" /> <!-- ID is automatically generated -->
+		</id>
+		<property name="Artist_name" column="artist_name"
+			type="string" />
+		<property name="Life_date" column="life_date" type="string" />
+		<property name="Nationality" column="nationality" type="string" />
+	</class>
+</hibernate-mapping>

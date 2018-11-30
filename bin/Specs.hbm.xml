@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="db.Specs" table="specs">  <!-- Java class Customer_order to table customer_order -->
+        <id name="Spec_id" type="int">
+            <generator class="increment" /> <!-- ID is automatically generated -->
+        </id>
+        <property name="Dimensions" column="dimensions"
+                  type="string" />
+    </class>
+</hibernate-mapping>
