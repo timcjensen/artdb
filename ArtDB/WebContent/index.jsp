@@ -28,6 +28,7 @@
 		    searchResult search = new searchResult();
 		    search.doGet(request, response);
         }
+		HibernateGetter.closeSession();
     %>
 </body>
 </html>

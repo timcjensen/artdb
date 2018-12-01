@@ -7,7 +7,6 @@ import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,10 +16,8 @@ public class HibernateGetter {
     private static Session session;
     static Transaction tx = null;
     
-    public static ResultObject[] searchResult(String object_title) {
+    public static List<Art_Object> searchResult(String object_title) {
 		System.out.println("Initializing search:");
-		Session session = HibernateGetter.init();	
-		System.out.println("Session init");
 		
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 		
@@ -40,53 +37,57 @@ public class HibernateGetter {
 				builder.keyword().onField("Title").matching(object_title).createQuery();
 		
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, Art_Object.class);
+		
+		@SuppressWarnings("unchecked") // Type safety: The expression of type List needs unchecked conversion to conform to List<Art_Object>
 		List<Art_Object> result = fullTextQuery.list();
 		int resultCount = result.size();
-		ResultObject[] resultList = new ResultObject[resultCount];
 		
 		System.out.println(resultCount);
-		
-		ListIterator<Art_Object> itr = result.listIterator();
-		
-		for(int i = 0 ; i < resultCount; i++) {
-			resultList[i] = new ResultObject(itr.next().getObject_id());
-		}
-		
-		session.close();
-		return resultList;
+				
+		return result;
     }
 
     public static Session init(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		System.out.println("Session init");
         return session = sessionFactory.openSession();
     }
     
+    public static boolean closeSession() {
+    	if(session.isOpen()) {
+    		session.close();
+    		return true;
+    	}    	
+    	else
+    		return false;
+    }
+    
 	public static Artist getArtist(int id) {
-		return (Artist) session.get(Artist.class, id);
+		return session.get(Artist.class, id);
 
 	}
 	
 	public static Art_Object getArt_Object(int id) {
-		return (Art_Object) session.get(Art_Object.class, id);
+		return session.get(Art_Object.class, id);
 	}
 
     public static Culture_info getCulture_info(int id) {
-        return (Culture_info) session.get(Culture_info.class, id);
+        return session.get(Culture_info.class, id);
     }
 
     public static Department getDepartment(int id) {
-        return (Department) session.get(Department.class, id);
+        return session.get(Department.class, id);
     }
 
     public static Exhibitions getExhibition(int id) {
-        return (Exhibitions) session.get(Exhibitions.class, id);
+        return session.get(Exhibitions.class, id);
     }
 
     public static Room getRoom(int id) {
-        return (Room) session.get(Room.class, id);
+        return session.get(Room.class, id);
     }
 
     public static Specs getSpec(int id) {
-        return (Specs) session.get(Specs.class, id);
+        return session.get(Specs.class, id);
     }
 }

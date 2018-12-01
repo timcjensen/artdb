@@ -26,10 +26,13 @@ public class searchResult extends HttpServlet{
         if(paramNames.hasMoreElements()){
         	out.print("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
                     + "<HEAD>\n" + "<TITLE>Search Results</TITLE>\n");
-        	ResultObject[] results = HibernateGetter.searchResult(title);
+        	List<Art_Object> resultList = HibernateGetter.searchResult(title);
         	
-        	for(int i = 0 ; i < results.length ; i++) {
-                out.println(results[i].getTitle() + "<br>");
+        	ListIterator<Art_Object> itr = resultList.listIterator();
+        	
+        	while(itr.hasNext()) {
+        		ResultObject result = new ResultObject(itr.next().getObject_id());
+                out.println(result.toString() + "<br>");
         	}
             
         }

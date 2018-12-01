@@ -182,6 +182,17 @@ public class ResultObject {
 		return Dimensions;
 	}
 	
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append(Title + ", ");
+		result.append(Description + ", ");
+		result.append(Artist_name + ", ");
+		result.append(Department_name + ", ");
+		result.append(Exhibition_title + ", ");
+		
+		return result.toString();
+	}
+	
 	public boolean selection() {
 		return true;
 	}
