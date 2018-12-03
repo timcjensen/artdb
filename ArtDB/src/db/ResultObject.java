@@ -1,7 +1,7 @@
 package db;
 
 import javax.persistence.Id;
-
+import org.apache.commons.text.StringEscapeUtils;
 import org.hibernate.search.annotations.Field;
 
 public class ResultObject {
@@ -184,11 +184,21 @@ public class ResultObject {
 	
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		result.append(Title + ", ");
-		result.append(Description + ", ");
-		result.append(Artist_name + ", ");
-		result.append(Department_name + ", ");
-		result.append(Exhibition_title + ", ");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Title));
+		result.append("</td>");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Description));
+		result.append("</td>");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Artist_name));
+		result.append("</td>");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Department_name));
+		result.append("</td>");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Exhibition_title));
+		result.append("</td>");
 		
 		return result.toString();
 	}

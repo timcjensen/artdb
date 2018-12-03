@@ -3,7 +3,6 @@ package db;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.hibernate.query.Query;
-import org.apache.commons.text.StringEscapeUtils;
 
 import javax.servlet.*;
 import java.io.*;
@@ -41,24 +40,47 @@ public class searchResult extends HttpServlet{
         	out.print("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
                     + "<HEAD>\n" + "<TITLE>Search Results</TITLE>\n");
         	
+        	out.print("<style>" +
+        	"table {" +
+        	    "font-family: arial, sans-serif;" +
+        	    "border-collapse: collapse;" +
+        	    "width: 100%;}" +
+        	"td, th {" +
+        	    "border: 1px solid #dddddd;" +
+        	    "text-align: left;" +
+        	    "padding: 8px;}" +
+        	"tr:nth-child(even) {" +
+        	    "background-color: #dddddd;}" +
+        	"</style>");
+        	
         	List<?> resultList = HibernateGetter.searchResult(table, searchString, searchColumn);
         	
         	ListIterator<?> itr = resultList.listIterator();
         	
         	query = objectMerge(table);
         	
+        	out.print("<script src=\"script.js\"></script>");
+        	out.print("<table id=\"result\">");
+        	out.print("<tr>");
+        	out.print("<th onClick=\"sortTable(0)\">Title</th>");
+        	out.print("<th onClick=\"sortTable(1)\">Description</th>");
+        	out.print("<th onClick=\"sortTable(2)\">Artist</th>");
+        	out.print("<th onClick=\"sortTable(3)\">Department</th>");
+        	out.print("<th onClick=\"sortTable(4)\">Exhibition</th>");
+        	out.print("</tr>");
         	while(itr.hasNext()) {
         		String id = generateID(table, itr);
         		query.setParameter("id", id);
         		List<?> list = query.list();
         		ListIterator<?> objectItr = list.listIterator();
                 while(objectItr.hasNext()) {
+                	out.print("<tr>");
                 	ResultObject result = new ResultObject(((Art_Object) objectItr.next()).getObject_id());
-                	String outString = StringEscapeUtils.escapeHtml4(result.toString());
-                	out.print(outString + "<br>");
+                	out.print(result.toString());
+                	out.print("</tr>");
                 }
         	}
-            
+        	out.print("</table>");
         }
     }
     
