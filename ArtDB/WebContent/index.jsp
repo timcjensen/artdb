@@ -14,11 +14,25 @@
 
 	<form action="index.jsp" method="get">
 		Search string: <label> <input type="text" name="searchString"></label>
-		Table: <label><input type="text" name="searchTable"></label>
-		Column: <label><input type="text" name="searchColumn"></label>
-		<br> <input type="Submit" value="Submit Search">
+
+		Table: <select name="searchTable" id="table" required>
+			<option value="">None</option>
+			<option value="Art_Object">Art Object</option>
+			<option value="Artist">Artist</option>
+			<option value="Culture_info">Cultural info</option>
+			<option value="Department">Department</option>
+			<option value="Exhibitions">Exhibition</option>
+			<option value="Room">Room</option>
+			<option value="Specs">Specs</option>
+		</select> Column: <select name="searchColumn" id="column">
+			<option value="">Please select a table</option>
+		</select> <br> <input type="Submit" value="Submit Search">
 	</form>
 
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="script.js"></script>
+	
 	<%	HibernateGetter.init();
 		String search = request.getParameter("searchString");
 		if(search != null && !search.trim().equals("")){
