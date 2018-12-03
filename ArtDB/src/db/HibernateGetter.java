@@ -15,19 +15,11 @@ public class HibernateGetter {
 
     private static Session session;
     static Transaction tx = null;
+    static FullTextSession fullTextSession;
     
     public static List<?> searchResult(Class<?> type, String matching, String field) {
 		System.out.println("Initializing search:");
-		
-		FullTextSession fullTextSession = Search.getFullTextSession(session);
-		
-		try {
-			fullTextSession.createIndexer().startAndWait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	
 		QueryBuilder builder = fullTextSession.getSearchFactory()
 				.buildQueryBuilder()
 				.forEntity(type)
@@ -49,7 +41,17 @@ public class HibernateGetter {
     public static Session init(){
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		System.out.println("Session init");
-        return session = sessionFactory.openSession();
+		session = sessionFactory.openSession();
+		fullTextSession = Search.getFullTextSession(session);
+		
+		try {
+			fullTextSession.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        return session;
     }
     
     public static Session getSession() {
