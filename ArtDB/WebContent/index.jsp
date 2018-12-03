@@ -33,11 +33,11 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="script.js"></script>
 	
+	
 	<%	HibernateGetter.init();
 		String search = request.getParameter("searchString");
 		if(search != null && !search.trim().equals("")){
 		    System.out.println(search);
-		    
 		    searchResult result = new searchResult();
 		    result.doGet(request, response);
         }

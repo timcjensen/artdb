@@ -29,7 +29,7 @@ public class searchResult extends HttpServlet{
         try {
 			table = Class.forName("db." + request.getParameter("searchTable"));
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("!!! CLASS NOT FOUND !!!");
 			e.printStackTrace();
 		}
         System.out.println("Search table: " + table.getName());
@@ -37,6 +37,7 @@ public class searchResult extends HttpServlet{
         System.out.println("Search string: " + searchColumn);
         
         if(paramNames.hasMoreElements()){
+        	
         	out.print("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
                     + "<HEAD>\n" + "<TITLE>Search Results</TITLE>\n");
         	
@@ -59,15 +60,18 @@ public class searchResult extends HttpServlet{
         	
         	query = objectMerge(table);
         	
-        	out.print("<script src=\"script.js\"></script>");
         	out.print("<table id=\"result\">");
+        	out.print("<thread>");
         	out.print("<tr>");
         	out.print("<th onClick=\"sortTable(0)\">Title</th>");
         	out.print("<th onClick=\"sortTable(1)\">Description</th>");
         	out.print("<th onClick=\"sortTable(2)\">Artist</th>");
         	out.print("<th onClick=\"sortTable(3)\">Department</th>");
         	out.print("<th onClick=\"sortTable(4)\">Exhibition</th>");
+        	out.print("<th>Image</th>");
         	out.print("</tr>");
+        	out.print("</thread>");
+        	out.print("<tbody>");
         	while(itr.hasNext()) {
         		String id = generateID(table, itr);
         		query.setParameter("id", id);
@@ -80,7 +84,9 @@ public class searchResult extends HttpServlet{
                 	out.print("</tr>");
                 }
         	}
+        	out.print("</tbody>");
         	out.print("</table>");
+        	out.print("<script src=\"script.js\"></script>");
         }
     }
     

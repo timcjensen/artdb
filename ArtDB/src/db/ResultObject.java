@@ -183,6 +183,7 @@ public class ResultObject {
 	}
 	
 	public String toString() {
+		String image = "http://api.artsmia.org/images/" + object_id + "/small.jpg";
 		StringBuilder result = new StringBuilder();
 		result.append("<td>");
 		result.append(StringEscapeUtils.escapeHtml4(Title));
@@ -199,7 +200,12 @@ public class ResultObject {
 		result.append("<td>");
 		result.append(StringEscapeUtils.escapeHtml4(Exhibition_title));
 		result.append("</td>");
-		
+		result.append("<td>");
+		result.append("<a href=\"" + image + "\" target=\"_blank\">");
+		result.append("<img src=\"" + image + "\" height=100 width=100></img>");
+		result.append("</a>");
+		result.append("</td>");
+
 		return result.toString();
 	}
 	
