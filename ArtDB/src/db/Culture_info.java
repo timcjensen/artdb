@@ -1,29 +1,35 @@
 package db;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
 public class Culture_info {
-    @Id public int Culture_id;
-    @Field public String Continent;
-    @Field public String Country;
+    @Id private int culture_id;
+    @Field private String Continent;
+    @Field private String Country;
 
-    public Culture_info(int culture_id, String continent, String country) {
-        Culture_id = culture_id;
+    public Culture_info(int id, String continent, String country) {
+    	super();
+        culture_id = id;
         Continent = continent;
         Country = country;
     }
 
     public Culture_info() {
+    	super();
     }
 
     public int getCulture_id() {
-        return Culture_id;
+        return culture_id;
     }
 
-    public void setCulture_id(int culture_id) {
-        Culture_id = culture_id;
+    public void setCulture_id(int id) {
+        culture_id = id;
     }
 
     public String getContinent() {

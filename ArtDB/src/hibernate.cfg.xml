@@ -7,7 +7,9 @@
 
 <session-factory>
 	<property name="show_sql">false</property>
-		<property name="hibernate.search.default.indexBase">/var/lucene/indexes </property>
+	<property name="hibernate.search.default.directory_provider">local-heap</property>
+
+	<property name="hibernate.search.default.indexBase">/var/lucene/indexes</property>
 	
 	<!-- Using JDBC and MySQL, the default port is 3306, name of database is cs485_lab -->
 	<property name="connection.url"> jdbc:mysql://localhost:3306/artdb</property>

@@ -1,27 +1,33 @@
 package db;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
 public class Department {
-    @Id public int Department_id;
-    @Field public String Department_name;
+    @Id private int department_id;
+    @Field private String Department_name;
 
-    public Department(int department_id, String department_name) {
-        Department_id = department_id;
+    public Department(int id, String department_name) {
+    	super();
+        department_id = id;
         Department_name = department_name;
     }
 
     public Department() {
+    	super();
     }
 
     public int getDepartment_id() {
-        return Department_id;
+        return department_id;
     }
 
-    public void setDepartment_id(int department_id) {
-        Department_id = department_id;
+    public void setDepartment_id(int id) {
+        department_id = id;
     }
 
     public String getDepartment_name() {

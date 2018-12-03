@@ -16,7 +16,7 @@ public class HibernateGetter {
     private static Session session;
     static Transaction tx = null;
     
-    public static List<Art_Object> searchResult(String object_title) {
+    public static List<?> searchResult(Class<?> type, String matching, String field) {
 		System.out.println("Initializing search:");
 		
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
@@ -30,16 +30,15 @@ public class HibernateGetter {
 
 		QueryBuilder builder = fullTextSession.getSearchFactory()
 				.buildQueryBuilder()
-				.forEntity(Art_Object.class)
+				.forEntity(type)
 				.get();
 		
 		org.apache.lucene.search.Query query =
-				builder.keyword().onField("Title").matching(object_title).createQuery();
+				builder.keyword().onField(field).matching(matching).createQuery();
 		
-		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, Art_Object.class);
+		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, type);
 		
-		@SuppressWarnings("unchecked") // Type safety: The expression of type List needs unchecked conversion to conform to List<Art_Object>
-		List<Art_Object> result = fullTextQuery.list();
+		List<?> result = fullTextQuery.list();
 		int resultCount = result.size();
 		
 		System.out.println(resultCount);
@@ -51,6 +50,10 @@ public class HibernateGetter {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		System.out.println("Session init");
         return session = sessionFactory.openSession();
+    }
+    
+    public static Session getSession() {
+    	return session;
     }
     
     public static boolean closeSession() {

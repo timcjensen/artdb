@@ -1,9 +1,13 @@
 package db;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
 public class Artist {
 	@Id private int artist_id;
 	@Field private String Artist_name;

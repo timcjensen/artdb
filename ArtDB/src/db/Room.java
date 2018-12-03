@@ -1,9 +1,13 @@
 package db;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
+@Entity
+@Indexed
 public class Room {
     @Id private int Room_id;
     @Field private String Room_name;
