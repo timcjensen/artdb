@@ -10,13 +10,11 @@
 	<%@ page import="java.io.*"%>
 	<%@ page import="db.*"%>
 
-	<h1 align="center">Search</h1>
-
 	<form action="index.jsp" method="get">
 		Search string: <label> <input type="text" name="searchString"></label>
 
 		Table: <select name="searchTable" id="table" required>
-			<option value="">None</option>
+			<option value="">Select a table</option>
 			<option value="Art_Object">Art Object</option>
 			<option value="Artist">Artist</option>
 			<option value="Culture_info">Cultural info</option>
@@ -31,17 +29,17 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="script.js"></script>
-	
-	
-	<%	HibernateGetter.init();
-		String search = request.getParameter("searchString");
-		if(search != null && !search.trim().equals("")){
-		    System.out.println(search);
-		    searchResult result = new searchResult();
-		    result.doGet(request, response);
-        }
-		HibernateGetter.closeSession();
-    %>
+	<script src="object.js"></script>
+
+
+	<%
+				HibernateGetter.init();
+					String search = request.getParameter("searchString");
+					if(search != null && !search.trim().equals("")){
+					    System.out.println(search);
+					    ObjectSearchResult result = new ObjectSearchResult();
+					    result.doGet(request, response);
+			        }
+			%>
 </body>
 </html>

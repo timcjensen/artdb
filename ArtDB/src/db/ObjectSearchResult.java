@@ -10,7 +10,7 @@ import java.util.*;
 
 @WebServlet("/SearchResults")
 
-public class searchResult extends HttpServlet{
+public class ObjectSearchResult extends HttpServlet{
 	private Query<?> query;
     private static final long serialVersionUID = 1L;
     Class<?> table = null;
@@ -38,10 +38,10 @@ public class searchResult extends HttpServlet{
         
         if(paramNames.hasMoreElements()){
         	
-        	out.print("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
+        	out.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
                     + "<HEAD>\n" + "<TITLE>Search Results</TITLE>\n");
         	
-        	out.print("<style>" +
+        	out.append("<style>" +
         	"table {" +
         	    "font-family: arial, sans-serif;" +
         	    "border-collapse: collapse;" +
@@ -50,6 +50,8 @@ public class searchResult extends HttpServlet{
         	    "border: 1px solid #dddddd;" +
         	    "text-align: left;" +
         	    "padding: 8px;}" +
+        	"th {" +
+        	    "cursor: pointer;}" +
         	"tr:nth-child(even) {" +
         	    "background-color: #dddddd;}" +
         	"</style>");
@@ -60,33 +62,37 @@ public class searchResult extends HttpServlet{
         	
         	query = objectMerge(table);
         	
-        	out.print("<table id=\"result\">");
-        	out.print("<thread>");
-        	out.print("<tr>");
-        	out.print("<th onClick=\"sortTable(0)\">Title</th>");
-        	out.print("<th onClick=\"sortTable(1)\">Description</th>");
-        	out.print("<th onClick=\"sortTable(2)\">Artist</th>");
-        	out.print("<th onClick=\"sortTable(3)\">Department</th>");
-        	out.print("<th onClick=\"sortTable(4)\">Exhibition</th>");
-        	out.print("<th>Image</th>");
-        	out.print("</tr>");
-        	out.print("</thread>");
-        	out.print("<tbody>");
+        	out.append("<table id=\"result\">\n");
+        	out.append("<thread>\n");
+        	out.append("<tr>\n");
+        	out.append("<th>More info</th>\n");
+        	out.append("<th onClick=\"sortTable(0)\">Title</th>\n");
+        	out.append("<th onClick=\"sortTable(1)\">Description</th>\n");
+        	out.append("<th onClick=\"sortTable(2)\">Artist</th>\n");
+        	out.append("<th onClick=\"sortTable(3)\">Country</th>\n");
+        	out.append("<th onClick=\"sortTable(4)\">Department</th>\n");
+        	out.append("<th onClick=\"sortTable(5)\">Exhibition</th>\n");
+        	out.append("<th onClick=\"sortTable(6)\">Room</th>\n");
+        	out.append("<th onClick=\"sortTable(7)\">Dimensions</th>\n");
+        	out.append("<th>Image</th\n>");
+        	out.append("</tr>\n");
+        	out.append("</thread>\n");
+        	out.append("<tbody>\n");
         	while(itr.hasNext()) {
         		String id = generateID(table, itr);
         		query.setParameter("id", id);
         		List<?> list = query.list();
         		ListIterator<?> objectItr = list.listIterator();
                 while(objectItr.hasNext()) {
-                	out.print("<tr>");
+                	out.append("<tr>\n");
                 	ResultObject result = new ResultObject(((Art_Object) objectItr.next()).getObject_id());
-                	out.print(result.toString());
-                	out.print("</tr>");
+                	out.append(result.toString());
+                	out.append("</tr>\n");
                 }
         	}
-        	out.print("</tbody>");
-        	out.print("</table>");
-        	out.print("<script src=\"script.js\"></script>");
+        	out.append("</tbody>\n");
+        	out.append("</table>\n");
+        	out.append("<script src=\"object.js\"></script>");
         }
     }
     

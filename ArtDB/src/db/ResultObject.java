@@ -186,6 +186,11 @@ public class ResultObject {
 		String image = "http://api.artsmia.org/images/" + object_id + "/small.jpg";
 		StringBuilder result = new StringBuilder();
 		result.append("<td>");
+		result.append("<form action=\"DetailedObject\" method=\"post\">\r\n" + 
+				"  <button type=\"submit\" name=\"object_id\" value=\"" + object_id + "\" class=\"btn-link\">More info</button>\r\n" + 
+				"</form>\r\n");
+		result.append("</td>");
+		result.append("<td>");
 		result.append(StringEscapeUtils.escapeHtml4(Title));
 		result.append("</td>");
 		result.append("<td>");
@@ -195,16 +200,54 @@ public class ResultObject {
 		result.append(StringEscapeUtils.escapeHtml4(Artist_name));
 		result.append("</td>");
 		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Country));
+		result.append("</td>");
+		result.append("<td>");
 		result.append(StringEscapeUtils.escapeHtml4(Department_name));
 		result.append("</td>");
 		result.append("<td>");
 		result.append(StringEscapeUtils.escapeHtml4(Exhibition_title));
 		result.append("</td>");
 		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Room_name));
+		result.append("</td>");
+		result.append("<td>");
+		result.append(StringEscapeUtils.escapeHtml4(Dimensions));
+		result.append("</td>");
+		result.append("<td>");
 		result.append("<a href=\"" + image + "\" target=\"_blank\">");
 		result.append("<img src=\"" + image + "\" height=100 width=100></img>");
 		result.append("</a>");
 		result.append("</td>");
+
+		return result.toString();
+	}
+	
+	public String fullInfo() {
+		String image = "http://api.artsmia.org/images/" + object_id + "/small.jpg";
+		StringBuilder result = new StringBuilder();
+		result.append("<h1>" + Title + "</hr><br>");
+		result.append("<h2> By " + Artist_name + "</hr><br>");
+		result.append("<h3>Description: " + Description + "</hr><br>");
+		result.append("<h3>Signature: " + Signature + "</hr><br>");
+		result.append("<h3>Dated: " + Dated + "</hr><br>");
+		result.append("<h3>Signature: " + Signature + "</hr><br>");
+		result.append("<h3>Markings: " + Markings + "</hr><br>");
+		result.append("<h3>Style: " + Style + "</hr><br>");
+		result.append("<h3>Credit line: " + Credit_line + "</hr><br>");
+		result.append("<h3>Accession number: " + Accession_number + "</hr><br>");
+		result.append("<br>");
+		result.append("<h3>Artist life: " + Life_date + "</hr><br>");
+		result.append("<h3>Artist nationality: " + Nationality + "</hr><br>");
+		result.append("<br>");
+		result.append("<h3>Continent: " + Continent + "</hr><br>");
+		result.append("<h3>Country: " + Country + "</hr><br>");
+		result.append("<h3>Department: " + Department_name + "</hr><br>");
+		result.append("<h3>Exhibition: " + Exhibition_title + "</hr><br>");
+		result.append("<h3>Exhibition display date: " + Display_date + "</hr><br>");
+		result.append("<h3>Room: " + Room_name + "</hr><br>");
+		result.append("<h3>Dimensions: " + Dimensions + "</hr><br>");
+		result.append("<img src=\"" + image + "\" height=100 width=100></img>");
 
 		return result.toString();
 	}
