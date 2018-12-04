@@ -27,7 +27,7 @@ $(document)
 										} else if (val == "Exhibitions") {
 											$("#column")
 													.html(
-															"<option value='Exhibition_title'>Title</option><option value='Description'>Description</option>"
+															"<option value='Exhibition_title'>Title</option><option value='Exhibition_description'>Description</option>"
 																	+ "<option value='Begin'>Begin</option><option value='End'>End</option><option value='Display_date'>Display date</option>");
 										} else if (val == "Room") {
 											$("#column")

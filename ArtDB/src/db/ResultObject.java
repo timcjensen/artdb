@@ -247,6 +247,7 @@ public class ResultObject {
 		result.append("<h3>Exhibition display date: " + Display_date + "</hr><br>");
 		result.append("<h3>Room: " + Room_name + "</hr><br>");
 		result.append("<h3>Dimensions: " + Dimensions + "</hr><br>");
+		result.append("<a href=\"" + image + "\" target=\"_blank\">");
 		result.append("<img src=\"" + image + "\" height=100 width=100></img>");
 
 		return result.toString();

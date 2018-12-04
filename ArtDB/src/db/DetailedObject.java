@@ -26,6 +26,13 @@ public class DetailedObject extends HttpServlet{
         if(paramNames.hasMoreElements()){
         	out.append("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " + "Transitional//EN\">\n" + "<HTML>\n"
                     + "<HEAD>\n" + "<TITLE>Search Results</TITLE>\n");
+        	out.append("<button onclick=\"goBack()\">Go Back</button>\r\n" + 
+        			"\r\n" + 
+        			"<script>\r\n" + 
+        			"function goBack() {\r\n" + 
+        			"    window.history.back();\r\n" + 
+        			"}\r\n" + 
+        			"</script>\r\n");
         	ResultObject result = new ResultObject(Integer.parseInt(object_id));
         	out.append(result.fullInfo());
         }
